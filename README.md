@@ -47,3 +47,10 @@ accounts/        — пользователи, роли, регистрация
 characters/      — модель персонажа, CRUD, права доступа
 templates/       — общий шаблон и шаблон логина
 ```
+
+## ЕСЛИ С МИГРАЦИЯМИ ПРОБЛЕМЫ!!!
+Мигрировать нужно поочередно
+Вписываем построчно следующее
+`python manage.py makemigrations accounts`
+`python manage.py makemigrations characters`
+`python manage.py migrate`
