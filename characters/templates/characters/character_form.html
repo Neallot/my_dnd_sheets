@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{% if object %}Редактирование{% else %}Новый персонаж{% endif %}{% endblock %}
+{% block content %}
+
+<h2>{% if object %}Редактирование персонажа{% else %}Новый персонаж{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Сохранить</button>
+    <a class="btn btn-secondary" href="{% url 'character-list' %}">Отмена</a>
+</form>
+
+{% endblock %}

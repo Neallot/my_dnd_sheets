@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Удаление персонажа{% endblock %}
+{% block content %}
+
+<h2>Удалить персонажа «{{ object.name }}»?</h2>
+<p class="text-muted">Это действие необратимо.</p>
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Да, удалить</button>
+    <a class="btn btn-secondary" href="{% url 'character-detail' object.pk %}">Отмена</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Мои персонажи{% endblock %}
+{% block content %}
+
+<h2>Мои персонажи</h2>
+{% if owned %}
+<div class="row">
+    {% for c in owned %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ c.name }}</h5>
+                <p class="card-text text-muted">{{ c.race }} {{ c.char_class }}, ур. {{ c.level }}</p>
+                <p class="card-text">Мастер: {% if c.master %}{{ c.master.username }}{% else %}не назначен{% endif %}</p>
+                <a class="btn btn-sm btn-primary" href="{% url 'character-detail' c.pk %}">Открыть</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">У вас пока нет персонажей. <a href="{% url 'character-create' %}">Создать первого</a>.</p>
+{% endif %}
+
+{% if user.is_master %}
+<hr>
+<h2>Персонажи, которых я веду как мастер</h2>
+{% if mastered %}
+<div class="row">
+    {% for c in mastered %}
+    <div class="col-md-4 mb-3">
+        <div class="card border-warning">
+            <div class="card-body">
+                <h5 class="card-title">{{ c.name }}</h5>
+                <p class="card-text text-muted">{{ c.race }} {{ c.char_class }}, ур. {{ c.level }}</p>
+                <p class="card-text">Игрок: {{ c.owner.username }}</p>
+                <a class="btn btn-sm btn-warning" href="{% url 'character-detail' c.pk %}">Открыть</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">Пока нет персонажей, закреплённых за вами.</p>
+{% endif %}
+{% endif %}
+
+{% endblock %}

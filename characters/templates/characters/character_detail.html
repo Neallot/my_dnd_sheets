@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}{{ character.name }}{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>{{ character.name }}</h2>
+    <div>
+        {% if can_edit %}
+            <a class="btn btn-primary" href="{% url 'character-edit' character.pk %}">Редактировать</a>
+        {% endif %}
+        {% if can_delete %}
+            <a class="btn btn-outline-danger" href="{% url 'character-delete' character.pk %}">Удалить</a>
+        {% endif %}
+    </div>
+</div>
+
+<p>
+    <strong>Раса:</strong> {{ character.race }} &nbsp;
+    <strong>Класс:</strong> {{ character.char_class }} &nbsp;
+    <strong>Уровень:</strong> {{ character.level }} &nbsp;
+    <strong>Мировоззрение:</strong> {{ character.alignment }}
+</p>
+<p><strong>Предыстория:</strong> {{ character.background }}</p>
+<p>
+    <strong>Владелец:</strong> {{ character.owner.username }} &nbsp;
+    <strong>Мастер:</strong> {% if character.master %}{{ character.master.username }}{% else %}не назначен{% endif %}
+</p>
+
+<h4 class="mt-4">Характеристики</h4>
+<table class="table table-bordered w-auto">
+    <tr>
+        <th>СИЛ</th><td>{{ character.strength }}</td>
+        <th>ЛОВ</th><td>{{ character.dexterity }}</td>
+        <th>ТЕЛ</th><td>{{ character.constitution }}</td>
+    </tr>
+    <tr>
+        <th>ИНТ</th><td>{{ character.intelligence }}</td>
+        <th>МДР</th><td>{{ character.wisdom }}</td>
+        <th>ХАР</th><td>{{ character.charisma }}</td>
+    </tr>
+</table>
+
+<p>
+    <strong>ХП:</strong> {{ character.current_hp }} / {{ character.max_hp }} &nbsp;
+    <strong>Класс брони:</strong> {{ character.armor_class }}
+</p>
+
+<h4 class="mt-4">Инвентарь</h4>
+<p style="white-space: pre-wrap;">{{ character.inventory|default:"—" }}</p>
+
+<h4 class="mt-4">Заметки</h4>
+<p style="white-space: pre-wrap;">{{ character.notes|default:"—" }}</p>
+
+<a class="btn btn-secondary mt-3" href="{% url 'character-list' %}">← К списку</a>
+
+{% endblock %}
